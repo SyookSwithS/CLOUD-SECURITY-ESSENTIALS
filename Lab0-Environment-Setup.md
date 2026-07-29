@@ -15,9 +15,9 @@ All services are intended to run locally. LocalStack is used as the local AWS si
 
 ## Environment Summary
 
-Evidence is provided for the Kali environment.
+Evidence is provided for the Ubuntu environment.
 
-| Component | Kali Verified Version / Status | Kali Proof |
+| Component | Kali Verified Version / Status | Ubuntu Proof |
 | --- | --- | --- |
 | Docker | Docker version 29.6.2, build dfcd4efb | `Evidence/kali/1.docker.png` |
 | AWS CLI | aws-cli/2.36.9 Python/3.14.6 Linux/7.0.0-28-generic | `Evidence/kali/2.awscli.png` |
