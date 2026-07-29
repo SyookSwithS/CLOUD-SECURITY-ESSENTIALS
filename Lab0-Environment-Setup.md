@@ -53,7 +53,7 @@ docker --version
 Docker version 29.6.2, build dfcd4efb
 ```
 
-<img width="531" height="185" alt="Docker version" src="https://github.com/user-attachments/assets/d55af859-5647-435f-aaf4-34280a5275d6" />
+<img width="385" height="47" alt="Image" src="https://github.com/user-attachments/assets/732b85e5-7320-47a3-8733-33aba94a6e29" />
 
 ## Step 2: Install and Verify AWS CLI v2
 
@@ -77,7 +77,7 @@ aws --version
 aws-cli/2.36.9 Python/3.14.6 Linux/7.0.0-28-generic exe/x86_64.ubuntu.26
 ```
 
-<img width="645" height="186" alt="AWS CLI version" src="https://github.com/user-attachments/assets/52015aad-cd91-4f25-b7e8-7a7e240e61cb" />
+<img width="812" height="56" alt="Image" src="https://github.com/user-attachments/assets/9fe1d1a9-e12c-41dc-ba53-86559400eeb1" />
 
 No real AWS account is required for this lab because AWS CLI commands are pointed to LocalStack.
 
@@ -109,8 +109,7 @@ Client Version: v1.36.3
 Kustomize Version: v5.8.1
 ```
 
-<img width="385" height="47" alt="kind version" src="https://github.com/user-attachments/assets/732b85e5-7320-47a3-8733-33aba94a6e29" />
-<img width="812" height="56" alt="kubectl version" src="https://github.com/user-attachments/assets/9fe1d1a9-e12c-41dc-ba53-86559400eeb1" />
+<img width="478" height="92" alt="Image" src="https://github.com/user-attachments/assets/45ce06b6-d55c-426d-bc95-56ad6a83d4c9" />
 
 ## Step 4: Install and Verify Helper Tools
 
@@ -137,7 +136,7 @@ oathtool --version
 oathtool (OATH Toolkit) 2.6.14
 ```
 
-<img width="478" height="92" alt="OpenSSL and oathtool versions" src="https://github.com/user-attachments/assets/45ce06b6-d55c-426d-bc95-56ad6a83d4c9" />
+<img width="645" height="186" alt="Image" src="https://github.com/user-attachments/assets/52015aad-cd91-4f25-b7e8-7a7e240e61cb" />
 
 ## Step 5: Start and Verify LocalStack
 
@@ -156,6 +155,7 @@ docker ps
 
 **Result:** the health endpoint returned all services as `"available"`, edition `community`, version `4.4.0`. `docker ps` confirmed the `localstack` container is `Up` and `(healthy)`, with port `4566` mapped, alongside the `ccse-control-plane` kind node container.
 
+<img width="530" height="205" alt="Image" src="https://github.com/user-attachments/assets/f965e1aa-a267-4551-a938-e51dca1e65ce" />
 <img width="530" height="205" alt="LocalStack health and docker ps" src="https://github.com/user-attachments/assets/f965e1aa-a267-4551-a938-e51dca1e65ce" />
 
 ## Step 6: Create and Verify the Kubernetes Cluster
@@ -180,7 +180,7 @@ NAME                 STATUS   ROLES           AGE   VERSION
 ccse-control-plane   Ready    control-plane   17h   v1.30.0
 ```
 
-<img width="530" height="312" alt="Kubernetes cluster status" src="https://github.com/user-attachments/assets/190c9007-8c31-4b32-99f8-921da738ddc4" />
+<img width="531" height="185" alt="Image" src="https://github.com/user-attachments/assets/d55af859-5647-435f-aaf4-34280a5275d6" />
 
 ## Step 7: Configure AWS CLI for LocalStack
 
@@ -208,8 +208,8 @@ aws $EP sts get-caller-identity
     "Arn": "arn:aws:iam::000000000000:root"
 }
 ```
-
-[Letak link gambar AWS CLI / STS caller identity di sini]
+<img width="530" height="312" alt="Image" src="https://github.com/user-attachments/assets/190c9007-8c31-4b32-99f8-921da738ddc4" />
+<img width="940" height="249" alt="Image" src="https://github.com/user-attachments/assets/8ec039ba-630a-407e-9f14-8e07aeeec511" />
 
 This confirms AWS CLI commands are targeting LocalStack instead of real AWS services.
 
