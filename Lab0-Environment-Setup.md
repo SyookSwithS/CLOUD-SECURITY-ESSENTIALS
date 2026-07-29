@@ -19,15 +19,15 @@ Evidence is provided for the Ubuntu environment.
 
 | Component | Kali Verified Version / Status | Ubuntu Proof |
 | --- | --- | --- |
-| Docker | Docker version 29.6.2, build dfcd4efb | `Evidence/kali/1.docker.png` |
-| AWS CLI | aws-cli/2.36.9 Python/3.14.6 Linux/7.0.0-28-generic | `Evidence/kali/2.awscli.png` |
-| kind | kind version 0.23.0 | `Evidence/kali/3.kubectl.png` |
-| kubectl | Client version v1.36.3, Kustomize v5.8.1 | `Evidence/kali/3.kubectl.png` |
-| OpenSSL | OpenSSL 3.5.5 27 Jan 2026 | `Evidence/kali/4.Helper.png` |
+| Docker | Docker version 29.6.2, build dfcd4efb | `Evidence/ubuntu/1.docker.png` |
+| AWS CLI | aws-cli/2.36.9 Python/3.14.6 Linux/7.0.0-28-generic | `Evidence/ubuntu/2.awscli.png` |
+| kind | kind version 0.23.0 | `Evidence/ubuntu/3.kubectl.png` |
+| kubectl | Client version v1.36.3, Kustomize v5.8.1 | `Evidence/ubuntu/3.kubectl.png` |
+| OpenSSL | OpenSSL 3.5.5 27 Jan 2026 | `Evidence/ubuntu/4.Helper.png` |
 | oathtool | OATH Toolkit 2.6.14 | `Evidence/kali/4.Helper.png` |
-| LocalStack | Running and healthy on port 4566 (edition: community, version 4.4.0) | `Evidence/kali/5.localstack.png` |
-| Kubernetes | kind cluster `ccse` running with node `ccse-control-plane` Ready, version v1.30.0 | `Evidence/kali/5.1.kubenetes.png` |
-| AWS CLI LocalStack endpoint | Dummy credentials configured and `sts get-caller-identity` tested through LocalStack | `Evidence/kali/6-config.png` |
+| LocalStack | Running and healthy on port 4566 (edition: community, version 4.4.0) | `Evidence/ubuntu/5.localstack.png` |
+| Kubernetes | kind cluster `ccse` running with node `ccse-control-plane` Ready, version v1.30.0 | `Evidence/ubuntu/5.1.kubenetes.png` |
+| AWS CLI LocalStack endpoint | Dummy credentials configured and `sts get-caller-identity` tested through LocalStack | `Evidence/ubuntu/6-config.png` |
 
 ## Step 1: Install and Verify Docker
 
