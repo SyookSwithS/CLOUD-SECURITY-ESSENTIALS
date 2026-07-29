@@ -155,7 +155,7 @@ docker ps
 
 **Result:** the health endpoint returned all services as `"available"`, edition `community`, version `4.4.0`. `docker ps` confirmed the `localstack` container is `Up` and `(healthy)`, with port `4566` mapped, alongside the `ccse-control-plane` kind node container.
 
-<img width="530" height="205" alt="Image" src="https://github.com/user-attachments/assets/f965e1aa-a267-4551-a938-e51dca1e65ce" />
+<img width="530" height="312" alt="Image" src="https://github.com/user-attachments/assets/190c9007-8c31-4b32-99f8-921da738ddc4" />
 <img width="530" height="205" alt="LocalStack health and docker ps" src="https://github.com/user-attachments/assets/f965e1aa-a267-4551-a938-e51dca1e65ce" />
 
 ## Step 6: Create and Verify the Kubernetes Cluster
@@ -208,7 +208,7 @@ aws $EP sts get-caller-identity
     "Arn": "arn:aws:iam::000000000000:root"
 }
 ```
-<img width="530" height="312" alt="Image" src="https://github.com/user-attachments/assets/190c9007-8c31-4b32-99f8-921da738ddc4" />
+
 <img width="940" height="249" alt="Image" src="https://github.com/user-attachments/assets/8ec039ba-630a-407e-9f14-8e07aeeec511" />
 
 This confirms AWS CLI commands are targeting LocalStack instead of real AWS services.
