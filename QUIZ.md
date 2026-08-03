@@ -1,5 +1,5 @@
 
-## QUIZ ANSWERS
+## Quiz Answers
 
 **1. Which AWS-managed policy provides full administrative access?**
    ```
