@@ -169,8 +169,8 @@ Output summary:
 {
     "Users": [
         {
-            "UserName": "CloudAdmin_dani",
-            "Arn": "arn:aws:iam::000000000000:user/CloudAdmin_dani"
+            "UserName": "CloudAdmin_Syukri",
+            "Arn": "arn:aws:iam::000000000000:user/CloudAdmin_Syukri"
         }
     ],
     "Group": {
@@ -180,7 +180,7 @@ Output summary:
 }
 ```
 
-This proves that `CloudAdmin_dani` is a member of the `Admins` group. The admin permission is inherited from the group rather than attached directly to the user.
+This proves that `CloudAdmin_Syukri` is a member of the `Admins` group. The admin permission is inherited from the group rather than attached directly to the user.
 
 Evidence:
 
@@ -461,7 +461,7 @@ The service account cannot list pods in `prod` because the Role and RoleBinding 
 
 Evidence:
 
-![RBAC can-i tests](Evidence/7-test.png)
+<img width="598" height="126" alt="Image" src="https://github.com/user-attachments/assets/577d52ac-68eb-46eb-ab05-f40bef139b34" />
 
 ### Authentication vs Authorization
 
@@ -496,25 +496,21 @@ subjects:
   namespace: dev
 ```
 
-Evidence:
-
-<img width="598" height="126" alt="Image" src="https://github.com/user-attachments/assets/577d52ac-68eb-46eb-ab05-f40bef139b34" />
-
 This confirms that the `dev-user-binding` RoleBinding connects the `dev-user` service account to the `pod-reader` Role in the `dev` namespace.
 
 ## Short-Answer Questions
 
 ### Q1. Why is attaching policies to groups better than attaching them directly to users?
 
-Attaching policies to groups is better because permissions become easier to manage and audit. When many users need the same access, the policy only needs to be attached or changed once at the group level. Every member receives the updated permissions automatically. This reduces mistakes compared to managing permissions separately for each user.
+Attaching policies to groups is generally the better approach because it makes permission management far simpler and more consistent. Instead of assigning the same policy to each user one by one, you attach it once to a group, and every current and future member automatically inherits those permissions. If access needs change, you only update the policy in one place rather than hunting down every individual user who has it. This centralization not only saves time but also reduces the risk of human error.
 
 ### Q2. What is the difference between an IAM User and an IAM Role?
 
-An IAM User is a long-term identity usually used by a person or application and can have long-lived credentials such as passwords or access keys. An IAM Role is an assumable identity that provides temporary credentials. Roles are safer for many workloads because they avoid permanent access keys and can be granted only when needed.
+An IAM User represents a persistent identity, typically tied to a specific person or application, and it's associated with long-term credentials such as a password for console access or access keys for programmatic use. These credentials remain valid until manually rotated or revoked, which can pose a security risk if not managed carefully.An IAM Role, by contrast, isn't tied to a single person or entity, it's meant to be assumed temporarily by a user, application, or service that needs it. Instead of permanent credentials, a role issues short-lived, temporary security tokens that automatically expire. This makes roles a safer choice for many workloads, since there's no long-lived secret sitting around that could be leaked or misused. Roles also make it easy to grant access only when it's actually needed, rather than having standing permissions active at all times.
 
 ### Q3. Explain least privilege using the Analyst account, and how it reduces blast radius if compromised.
 
-The `Analyst_Syukri` account demonstrates least privilege because it only has `AmazonS3ReadOnlyAccess`. If the account is compromised, the attacker is limited to read-only S3 access instead of full administrative control. This reduces the blast radius because the attacker cannot use that account to perform high-impact actions such as deleting resources, changing IAM permissions or creating new privileged users.
+The Analyst_Syukri account illustrates the principle of least privilege because it's granted only the permissions necessary to perform its intended function, in this case, AmazonS3ReadOnlyAccess, allowing it to view S3 resources but not modify or delete them. No broader or administrative access is attached, even though it might be more convenient to grant it.This matters most in a worst-case scenario: if the account's credentials were ever compromised, the attacker would inherit only the permissions the account actually has meaning they could browse S3 data, but couldn't delete resources, alter IAM policies, provision new infrastructure, or create additional privileged accounts. This containment effect is what's meant by "reducing the blast radius" — by limiting what any single identity can do, you limit the maximum possible damage from any single point of failure, rather than letting one compromised account cascade into full environment-wide compromise.
 
 ### Q4. In Kubernetes, what is the difference between a Role and a RoleBinding?
 
