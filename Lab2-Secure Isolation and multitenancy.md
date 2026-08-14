@@ -98,6 +98,8 @@ Evidence:
 
 <img width="607" height="187" alt="Image" src="https://github.com/user-attachments/assets/c1ad0a5a-0268-484b-bb13-1fad814aa883" />
 
+<img width="648" height="57" alt="Image" src="https://github.com/user-attachments/assets/6c6e9505-b9f6-46f7-a700-c5c1973c1fed" />
+
 ## Task 2: Observe the Default-Open Risk
 
 The service IP for Tenant B was retrieved:
@@ -131,7 +133,6 @@ The `HTTP 200` response proves that a pod in `tenant-a` could reach the service 
 
 Evidence:
 
-<img width="648" height="57" alt="Image" src="https://github.com/user-attachments/assets/6c6e9505-b9f6-46f7-a700-c5c1973c1fed" />
 
 <img width="647" height="90" alt="Image" src="https://github.com/user-attachments/assets/12e35983-ae97-4d40-b6d3-6b0028cf32bd" />
 
