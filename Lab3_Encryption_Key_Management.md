@@ -3,9 +3,9 @@
 Cloud Computing Security Essentials
  
   -----------------------------------------------------------------------
-  **Course**              IKB42603 -- Cloud Computing Security Essentials
+  **Course**         :     IKB42603 -- Cloud Computing Security Essentials
   ----------------------- -----------------------------------------------
-  **Lab**                 Lab 3 -- Data Protection: Encryption & Key
+  **Lab**           :      Lab 3 -- Data Protection: Encryption & Key
                           Management
  
   **Student Name**  :      Muhammad Syukri Bin Hasbullah
