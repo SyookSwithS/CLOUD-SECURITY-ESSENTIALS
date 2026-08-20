@@ -304,19 +304,19 @@ Symmetric encryption relies on one shared key that both parties must
 possess, so it must be distributed and protected everywhere it\'s used
 and in the cloud, where data and services span many components,
 providers, and locations, safely getting that key to every party without
-ever exposing it in transit or at rest becomes a hard problem at scale..
+ever exposing it in transit or at rest becomes a hard problem at scale.
  
 ### Q2. Why is key management described as the weakest link, not the algorithm?
  
-## Modern algorithms like AES-256 and RSA-2048 are computationally infeasible to break directly, so real-world breaches happen instead because keys are mishandled left in plaintext, hardcoded into code, over-shared, or never rotated---meaning an attacker who obtains the key bypasses the mathematics entirely, which is why how a key is stored and controlled matters far more than which algorithm was chosen.
+ Modern algorithms like AES-256 and RSA-2048 are computationally infeasible to break directly, so real-world breaches happen instead because keys are mishandled left in plaintext, hardcoded into code, over-shared, or never rotated---meaning an attacker who obtains the key bypasses the mathematics entirely, which is why how a key is stored and controlled matters far more than which algorithm was chosen.
  
 ### Q3. Explain envelope encryption and why only the master key needs hardware-grade protection.
  
-### Envelope encryption is a two-layer scheme: instead of encrypting the actual data with the master key, you generate a fresh, disposable data key, use *that* to encrypt the bulk data locally, then encrypt (wrap) the data key itself using the master key stored in the KMS---so the master key is only ever handling small pieces of key material, never the data itself. This matters for hardware-grade protection (like an HSM) because the master key is the one piece that, if compromised, would unlock every data key it has ever wrapped---essentially a master password for everything. Data keys, by contrast, are cheap to generate, used briefly, and each one only protects a single file or object, so losing one is a contained, low-impact event that doesn\'t justify the cost and performance overhead of hardware protection for every single one.
+Envelope encryption is a two-layer scheme: instead of encrypting the actual data with the master key, you generate a fresh, disposable data key, use *that* to encrypt the bulk data locally, then encrypt (wrap) the data key itself using the master key stored in the KMS---so the master key is only ever handling small pieces of key material, never the data itself. This matters for hardware-grade protection (like an HSM) because the master key is the one piece that, if compromised, would unlock every data key it has ever wrapped---essentially a master password for everything. Data keys, by contrast, are cheap to generate, used briefly, and each one only protects a single file or object, so losing one is a contained, low-impact event that doesn\'t justify the cost and performance overhead of hardware protection for every single one.
  
 ### Q4. How does cryptographic erasure achieve provable deletion where overwriting cannot (in the cloud)?
  
-### In the cloud, storage is virtualized and duplicated across many physical disks you don\'t control, so there\'s no reliable way to guarantee every copy has been wiped---cryptographic erasure sidesteps this entirely by destroying the encryption key instead of the data, since a key-less ciphertext is permanently useless no matter how many copies of it survive somewhere on disk.
+In the cloud, storage is virtualized and duplicated across many physical disks you don\'t control, so there\'s no reliable way to guarantee every copy has been wiped---cryptographic erasure sidesteps this entirely by destroying the encryption key instead of the data, since a key-less ciphertext is permanently useless no matter how many copies of it survive somewhere on disk.
  
 ### Q5. How does a hash chain make a log tamper-evident?
  
