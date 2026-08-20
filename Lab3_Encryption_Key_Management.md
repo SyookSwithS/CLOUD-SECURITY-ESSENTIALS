@@ -67,7 +67,6 @@ diff record.txt record.dec.txt && echo \'MATCH: decryption successful\'
  
 <img width="875" height="83" alt="asymmetric" src="https://github.com/user-attachments/assets/b7a64ca5-ee3b-44e7-a1c3-7f4ba923ece9" />
  
-*Figure 2 --- Decryption verified: MATCH: decryption successful.*
  
 **Result:** MATCH: decryption successful
  
