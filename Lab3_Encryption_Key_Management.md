@@ -63,9 +63,10 @@ openssl enc -d -aes-256-cbc -pbkdf2 -in record.enc -out record.dec.txt\
 diff record.txt record.dec.txt && echo \'MATCH: decryption successful\'
  
 <img width="875" height="272" alt="Image" src="https://github.com/user-attachments/assets/feb67fa3-117a-47b5-83aa-aed00e256b10" />
-
+*Figure 1 — AES-256 encryption; record.enc shown as unreadable ciphertext.*
  
 <img width="875" height="83" alt="asymmetric" src="https://github.com/user-attachments/assets/b7a64ca5-ee3b-44e7-a1c3-7f4ba923ece9" />
+*Figure 2 — Decryption verified: MATCH: decryption successful.*
  
  
 **Result:** MATCH: decryption successful
