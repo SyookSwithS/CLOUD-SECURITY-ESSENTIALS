@@ -53,7 +53,8 @@ A sample sensitive record was encrypted with AES-256-CBC using a shared
 passphrase as the key, then decrypted back using the same passphrase ---
 demonstrating that symmetric encryption uses one key for both
 directions.
- 
+
+ ```
 echo \'Patient: Ahmad, Diagnosis: confidential\' \> record.txt\
 \
 openssl enc -aes-256-cbc -pbkdf2 -salt -in record.txt -out record.enc\
@@ -61,6 +62,7 @@ cat record.enc\
 \
 openssl enc -d -aes-256-cbc -pbkdf2 -in record.enc -out record.dec.txt\
 diff record.txt record.dec.txt && echo \'MATCH: decryption successful\'
+```
  
 <img width="875" height="272" alt="Image" src="https://github.com/user-attachments/assets/feb67fa3-117a-47b5-83aa-aed00e256b10" />
 Figure 1 — AES-256 encryption; record.enc shown as unreadable ciphertext.
@@ -77,7 +79,7 @@ A 2048-bit RSA key pair was generated. Data was encrypted with the
 public key and decrypted with the private key; a signature was then
 created with the private key and verified with the public key --- the
 reverse pairing, which is the basis of PKI and TLS.
- 
+ ```
 openssl genrsa -out private.pem 2048\
 openssl rsa -in private.pem -pubout -out public.pem\
 \
@@ -88,7 +90,7 @@ record.rsa.txt\
 \
 openssl dgst -sha256 -sign private.pem -out record.sig record.txt\
 openssl dgst -sha256 -verify public.pem -signature record.sig record.txt
- 
+ ```
 <img width="875" height="342" alt="tls" src="https://github.com/user-attachments/assets/3465d614-7944-4e0b-b634-239ea90a1709" />
  
 *Figure 3 --- RSA key pair generated, encrypt/decrypt round-trip, and
@@ -106,7 +108,7 @@ cert/key files alone does not turn on TLS. The fix was to supply an
 explicit nginx server block (listen 443 ssl; with ssl_certificate /
 ssl_certificate_key directives) mounted in as the container\'s site
 configuration, alongside the certificate, key, and record.txt.
- 
+ ```
 openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \\\
 -days 7 -nodes -subj \'/CN=localhost\'\
 \
@@ -119,7 +121,7 @@ docker run \--rm -d \--name tls -p 8443:443 \\\
 nginx\
 \
 curl -k https://localhost:8443/record.txt
- 
+ ```
 <img width="975" height="493" alt="tls" src="https://github.com/user-attachments/assets/6a95df64-76e1-4b5a-b0b4-a19832676cc8" />
 
  
@@ -150,7 +152,7 @@ A customer master key (CMK) was created in LocalStack KMS for tenant A,
 and used to encrypt a small value directly --- demonstrating the most
 basic KMS operation before moving to envelope encryption for larger
 data.
- 
+ ```
 EP=\'\--endpoint-url=http://localhost:4566\'\
 \
 aws \$EP kms create-key \--description \'CCSE tenant-A master key\'\
@@ -159,7 +161,7 @@ KEY_A=\<KeyId from output\>\
 aws \$EP kms encrypt \--key-id \$KEY_A \--plaintext \"\$(echo -n
 \'hello\' \| base64)\" \\\
 \--query CiphertextBlob \--output text
- 
+ ```
 <img width="875" height="184" alt="Image" src="https://github.com/user-attachments/assets/3e298773-3883-46d4-8624-2737438553c7" />
 
  
@@ -180,7 +182,7 @@ one-time data key was requested from KMS, which returned both a
 plaintext copy and a copy wrapped (encrypted) by the master key. The
 plaintext copy was used locally with OpenSSL to encrypt the record, then
 deleted immediately --- leaving only the wrapped copy on disk.
- 
+ ```
 aws \$EP kms generate-data-key \--key-id \$KEY_A \--key-spec AES_256 \>
 dk_output.json\
 \
@@ -193,7 +195,7 @@ openssl enc -aes-256-cbc -pbkdf2 -in record.txt -out record.env.enc
 \
 rm datakey.bin datakey.b64\
 echo \'Only the KMS-wrapped data key (datakey.enc) remains.\'
- 
+ ```
 <img width="875" height="202" alt="Image" src="https://github.com/user-attachments/assets/f83a2c52-c566-479b-a604-930339831129" />
  
 *Figure 7 --- KMS generate-data-key returns a plaintext copy and a
@@ -232,7 +234,7 @@ A second, separate master key was created for tenant B, to model
 per-tenant key isolation on shared infrastructure. Tenant A\'s key was
 then scheduled for deletion to simulate cryptographic erasure of tenant
 A\'s data.
- 
+ ```
 aws \$EP kms create-key \--description \'CCSE tenant-B master key\'\
 KEY_B=\<KeyId from output\>\
 \
@@ -242,7 +244,7 @@ aws \$EP kms disable-key \--key-id \$KEY_A\
 \
 aws \$EP kms decrypt \--ciphertext-blob fileb://datakey.enc 2\>&1 \|
 head -3
- 
+ ```
 <img width="875" height="197" alt="Image" src="https://github.com/user-attachments/assets/e911d3b2-bc2f-4872-956f-5fe52f6b1a50" />
  
 <img width="875" height="169" alt="Image" src="https://github.com/user-attachments/assets/20abe26f-4de2-4926-b8dc-2b1ec1681a14" />
@@ -271,28 +273,24 @@ Encryption protects confidentiality; hashing protects integrity. The
 SHA-256 hash of the original record was compared against a tampered copy
 to show how sensitively a hash reacts to change, then a simple hash
 chain was built to show how tampering in a log can be detected.
- 
+ ```
 sha256sum record.txt\
 \
 cp record.txt tampered.txt; echo \'x\' \>\> tampered.txt\
 sha256sum record.txt tampered.txt
- 
+ ```
 <img width="875" height="91" alt="Image" src="https://github.com/user-attachments/assets/f80fc351-f67e-41c5-83e6-76508bbcefb8" />
 
  
 <img width="875" height="210" alt="Image" src="https://github.com/user-attachments/assets/4bc4dfec-9435-41aa-83df-8ce98d062607" />
- 
+ ```
 PREV=0\
 for line in \'login ok\' \'file read\' \'export data\'; do\
 PREV=\$(echo -n \"\$PREV\$line\" \| sha256sum \| cut -d\' \' -f1)\
 echo \"\$line \| \$PREV\"\
 done
  
-![](./media/image19.png){width="5.833333333333333in"
-height="1.3958333333333333in"}
- 
-*Figure 15 --- Hash chain linking three sequential log entries.*
- 
+ ```
 **Result:** Tamper-evidence demonstrated at both the single-file level
 (hash mismatch) and the log level (hash chain).
  
