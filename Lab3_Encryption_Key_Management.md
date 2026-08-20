@@ -8,13 +8,13 @@ Cloud Computing Security Essentials
   **Lab**                 Lab 3 -- Data Protection: Encryption & Key
                           Management
  
-  **Student Name**        Muhammad Syukri Bin Hasbullah
+  **Student Name**  :      Muhammad Syukri Bin Hasbullah
  
-  **Student ID**          52215225044
+  **Student ID**   :       52215225044
  
-  **Operating System**    Ubuntu (VMware Workstation)
+  **Operating System**  :  Ubuntu (VMware Workstation)
  
-  **Date Completed**      20 August 2026
+  **Date Completed**    :  20 August 2026 
   -----------------------------------------------------------------------
  
 *Note on redaction: All KMS Key IDs, ARNs, and generated data-key
@@ -296,9 +296,9 @@ height="1.3958333333333333in"}
 **Result:** Tamper-evidence demonstrated at both the single-file level
 (hash mismatch) and the log level (hash chain).
  
-# Short-Answer Questions
+## Short-Answer Questions
  
-## Q1. What is the key-distribution problem with symmetric encryption, and why does it matter for the cloud?
+### Q1. What is the key-distribution problem with symmetric encryption, and why does it matter for the cloud?
  
 Symmetric encryption relies on one shared key that both parties must
 possess, so it must be distributed and protected everywhere it\'s used
@@ -306,19 +306,19 @@ and in the cloud, where data and services span many components,
 providers, and locations, safely getting that key to every party without
 ever exposing it in transit or at rest becomes a hard problem at scale..
  
-## Q2. Why is key management described as the weakest link, not the algorithm?
+### Q2. Why is key management described as the weakest link, not the algorithm?
  
 ## Modern algorithms like AES-256 and RSA-2048 are computationally infeasible to break directly, so real-world breaches happen instead because keys are mishandled left in plaintext, hardcoded into code, over-shared, or never rotated---meaning an attacker who obtains the key bypasses the mathematics entirely, which is why how a key is stored and controlled matters far more than which algorithm was chosen.
  
-## Q3. Explain envelope encryption and why only the master key needs hardware-grade protection.
+### Q3. Explain envelope encryption and why only the master key needs hardware-grade protection.
  
-## Envelope encryption is a two-layer scheme: instead of encrypting the actual data with the master key, you generate a fresh, disposable data key, use *that* to encrypt the bulk data locally, then encrypt (wrap) the data key itself using the master key stored in the KMS---so the master key is only ever handling small pieces of key material, never the data itself. This matters for hardware-grade protection (like an HSM) because the master key is the one piece that, if compromised, would unlock every data key it has ever wrapped---essentially a master password for everything. Data keys, by contrast, are cheap to generate, used briefly, and each one only protects a single file or object, so losing one is a contained, low-impact event that doesn\'t justify the cost and performance overhead of hardware protection for every single one.
+### Envelope encryption is a two-layer scheme: instead of encrypting the actual data with the master key, you generate a fresh, disposable data key, use *that* to encrypt the bulk data locally, then encrypt (wrap) the data key itself using the master key stored in the KMS---so the master key is only ever handling small pieces of key material, never the data itself. This matters for hardware-grade protection (like an HSM) because the master key is the one piece that, if compromised, would unlock every data key it has ever wrapped---essentially a master password for everything. Data keys, by contrast, are cheap to generate, used briefly, and each one only protects a single file or object, so losing one is a contained, low-impact event that doesn\'t justify the cost and performance overhead of hardware protection for every single one.
  
-## Q4. How does cryptographic erasure achieve provable deletion where overwriting cannot (in the cloud)?
+### Q4. How does cryptographic erasure achieve provable deletion where overwriting cannot (in the cloud)?
  
-## In the cloud, storage is virtualized and duplicated across many physical disks you don\'t control, so there\'s no reliable way to guarantee every copy has been wiped---cryptographic erasure sidesteps this entirely by destroying the encryption key instead of the data, since a key-less ciphertext is permanently useless no matter how many copies of it survive somewhere on disk.
+### In the cloud, storage is virtualized and duplicated across many physical disks you don\'t control, so there\'s no reliable way to guarantee every copy has been wiped---cryptographic erasure sidesteps this entirely by destroying the encryption key instead of the data, since a key-less ciphertext is permanently useless no matter how many copies of it survive somewhere on disk.
  
-## Q5. How does a hash chain make a log tamper-evident?
+### Q5. How does a hash chain make a log tamper-evident?
  
 Each entry\'s hash is calculated using the previous entry\'s hash as
 part of its input, so every entry depends on the full history before it.
@@ -326,7 +326,7 @@ Changing, deleting, or reordering any entry changes its hash, which
 breaks every hash after it in the chain --- so tampering anywhere in the
 log is detectable by recomputing the chain.
  
-# Security Best-Practices Checklist
+### Security Best-Practices Checklist
  
 -   Data encrypted at rest (AES) and decryption verified.
 -   Asymmetric keys used correctly (encrypt with public, sign with
@@ -335,14 +335,14 @@ log is detectable by recomputing the chain.
 -   Envelope encryption used; plaintext data key not left on disk.
 -   Per-tenant keys used; cryptographic erasure demonstrated.
 -   Integrity verified with hashing / hash chain.
-# Cleanup & Teardown
+### Cleanup & Teardown
  
 docker stop tls 2\>/dev/null\
 rm -f record.\* private.pem public.pem key.pem cert.pem datakey.\*
 tampered.txt dk_output.json nginx.conf\
 docker stop localstack && docker rm localstack
  
-# Conclusion
+### Conclusion
  
 Lab 3 demonstrated data protection from first principles through to
 cloud-scale key management. Session A established the cryptographic
