@@ -153,12 +153,12 @@ and used to encrypt a small value directly --- demonstrating the most
 basic KMS operation before moving to envelope encryption for larger
 data.
  ```
-EP='--endpoint-url=http://localhost:4566\'\
+EP='--endpoint-url=http://localhost:4566'
 
-aws $EP kms create-key --description \'CCSE tenant-A master key'
+aws $EP kms create-key --description 'CCSE tenant-A master key'
 KEY_A=<KeyId from output>
 
-aws $EP kms encrypt --key-id \$KEY_A --plaintext "\$(echo -n
+aws $EP kms encrypt --key-id $KEY_A --plaintext "$(echo -n
 'hello' | base64)" 
 --query CiphertextBlob --output text
  ```
