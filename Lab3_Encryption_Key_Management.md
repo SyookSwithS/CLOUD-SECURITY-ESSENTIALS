@@ -55,13 +55,13 @@ demonstrating that symmetric encryption uses one key for both
 directions.
 
  ```
-echo \'Patient: Ahmad, Diagnosis: confidential\' \> record.txt\
+echo 'Patient: Ahmad, Diagnosis: confidential' > record.txt
 
-openssl enc -aes-256-cbc -pbkdf2 -salt -in record.txt -out record.enc\
+openssl enc -aes-256-cbc -pbkdf2 -salt -in record.txt -out record.enc
 cat record.enc
 
-openssl enc -d -aes-256-cbc -pbkdf2 -in record.enc -out record.dec.txt\
-diff record.txt record.dec.txt && echo \'MATCH: decryption successful\'
+openssl enc -d -aes-256-cbc -pbkdf2 -in record.enc -out record.dec.txt
+diff record.txt record.dec.txt && echo 'MATCH: decryption successful'
 ```
  
 <img width="875" height="272" alt="Image" src="https://github.com/user-attachments/assets/feb67fa3-117a-47b5-83aa-aed00e256b10" />
@@ -81,7 +81,7 @@ created with the private key and verified with the public key --- the
 reverse pairing, which is the basis of PKI and TLS.
  ```
 openssl genrsa -out private.pem 2048\
-openssl rsa -in private.pem -pubout -out public.pem\
+openssl rsa -in private.pem -pubout -out public.pem
 
 openssl pkeyutl -encrypt -pubin -inkey public.pem -in record.txt -out
 record.rsa
