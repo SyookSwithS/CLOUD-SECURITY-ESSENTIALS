@@ -56,10 +56,10 @@ directions.
 
  ```
 echo \'Patient: Ahmad, Diagnosis: confidential\' \> record.txt\
-\
+
 openssl enc -aes-256-cbc -pbkdf2 -salt -in record.txt -out record.enc\
-cat record.enc\
-\
+cat record.enc
+
 openssl enc -d -aes-256-cbc -pbkdf2 -in record.enc -out record.dec.txt\
 diff record.txt record.dec.txt && echo \'MATCH: decryption successful\'
 ```
@@ -82,13 +82,13 @@ reverse pairing, which is the basis of PKI and TLS.
  ```
 openssl genrsa -out private.pem 2048\
 openssl rsa -in private.pem -pubout -out public.pem\
-\
+
 openssl pkeyutl -encrypt -pubin -inkey public.pem -in record.txt -out
-record.rsa\
+record.rsa
 openssl pkeyutl -decrypt -inkey private.pem -in record.rsa -out
-record.rsa.txt\
-\
-openssl dgst -sha256 -sign private.pem -out record.sig record.txt\
+record.rsa.txt
+
+openssl dgst -sha256 -sign private.pem -out record.sig record.txt
 openssl dgst -sha256 -verify public.pem -signature record.sig record.txt
  ```
 <img width="875" height="342" alt="tls" src="https://github.com/user-attachments/assets/3465d614-7944-4e0b-b634-239ea90a1709" />
@@ -109,17 +109,17 @@ explicit nginx server block (listen 443 ssl; with ssl_certificate /
 ssl_certificate_key directives) mounted in as the container\'s site
 configuration, alongside the certificate, key, and record.txt.
  ```
-openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \\\
--days 7 -nodes -subj \'/CN=localhost\'\
-\
-\# nginx.conf supplies: listen 443 ssl; ssl_certificate/key directives\
-docker run \--rm -d \--name tls -p 8443:443 \\\
--v \$(pwd)/cert.pem:/etc/nginx/cert.pem \\\
--v \$(pwd)/key.pem:/etc/nginx/key.pem \\\
--v \$(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf \\\
--v \$(pwd)/record.txt:/usr/share/nginx/html/record.txt \\\
-nginx\
-\
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem 
+-days 7 -nodes -subj '/CN=localhost'
+
+# nginx.conf supplies: listen 443 ssl; ssl_certificate/key directives
+docker run \--rm -d \--name tls -p 8443:443 
+-v \$(pwd)/cert.pem:/etc/nginx/cert.pem 
+-v \$(pwd)/key.pem:/etc/nginx/key.pem 
+-v \$(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf 
+-v \$(pwd)/record.txt:/usr/share/nginx/html/record.txt 
+nginx
+
 curl -k https://localhost:8443/record.txt
  ```
 <img width="975" height="493" alt="tls" src="https://github.com/user-attachments/assets/6a95df64-76e1-4b5a-b0b4-a19832676cc8" />
@@ -153,14 +153,14 @@ and used to encrypt a small value directly --- demonstrating the most
 basic KMS operation before moving to envelope encryption for larger
 data.
  ```
-EP=\'\--endpoint-url=http://localhost:4566\'\
-\
-aws \$EP kms create-key \--description \'CCSE tenant-A master key\'\
-KEY_A=\<KeyId from output\>\
-\
-aws \$EP kms encrypt \--key-id \$KEY_A \--plaintext \"\$(echo -n
-\'hello\' \| base64)\" \\\
-\--query CiphertextBlob \--output text
+EP='--endpoint-url=http://localhost:4566\'\
+
+aws $EP kms create-key --description \'CCSE tenant-A master key'
+KEY_A=<KeyId from output>
+
+aws $EP kms encrypt --key-id \$KEY_A --plaintext "\$(echo -n
+'hello' | base64)" 
+--query CiphertextBlob --output text
  ```
 <img width="875" height="184" alt="Image" src="https://github.com/user-attachments/assets/3e298773-3883-46d4-8624-2737438553c7" />
 
@@ -183,18 +183,18 @@ plaintext copy and a copy wrapped (encrypted) by the master key. The
 plaintext copy was used locally with OpenSSL to encrypt the record, then
 deleted immediately --- leaving only the wrapped copy on disk.
  ```
-aws \$EP kms generate-data-key \--key-id \$KEY_A \--key-spec AES_256 \>
-dk_output.json\
-\
-jq -r \'.Plaintext\' dk_output.json \> datakey.b64\
-jq -r \'.CiphertextBlob\' dk_output.json \| base64 -d \> datakey.enc\
-\
-base64 -d datakey.b64 \> datakey.bin\
+aws $EP kms generate-data-key --key-id $KEY_A --key-spec AES_256 >
+dk_output.json
+
+jq -r '.Plaintext' dk_output.json > datakey.b64
+jq -r '.CiphertextBlob' dk_output.json | base64 -d > datakey.enc
+
+base64 -d datakey.b64 > datakey.bin
 openssl enc -aes-256-cbc -pbkdf2 -in record.txt -out record.env.enc
--pass file:./datakey.bin\
-\
-rm datakey.bin datakey.b64\
-echo \'Only the KMS-wrapped data key (datakey.enc) remains.\'
+-pass file:./datakey.bin
+
+rm datakey.bin datakey.b64
+echo 'Only the KMS-wrapped data key (datakey.enc) remains.'
  ```
 <img width="875" height="202" alt="Image" src="https://github.com/user-attachments/assets/f83a2c52-c566-479b-a604-930339831129" />
  
@@ -236,13 +236,13 @@ then scheduled for deletion to simulate cryptographic erasure of tenant
 A\'s data.
  ```
 aws \$EP kms create-key \--description \'CCSE tenant-B master key\'\
-KEY_B=\<KeyId from output\>\
-\
-aws \$EP kms schedule-key-deletion \--key-id \$KEY_A
-\--pending-window-in-days 7\
-aws \$EP kms disable-key \--key-id \$KEY_A\
-\
-aws \$EP kms decrypt \--ciphertext-blob fileb://datakey.enc 2\>&1 \|
+KEY_B=<KeyId from output>
+
+aws $EP kms schedule-key-deletion --key-id $KEY_A
+--pending-window-in-days 7
+aws $EP kms disable-key --key-id $KEY_A
+
+aws $EP kms decrypt \--ciphertext-blob fileb://datakey.enc 2>&1 |
 head -3
  ```
 <img width="875" height="197" alt="Image" src="https://github.com/user-attachments/assets/e911d3b2-bc2f-4872-956f-5fe52f6b1a50" />
@@ -274,9 +274,9 @@ SHA-256 hash of the original record was compared against a tampered copy
 to show how sensitively a hash reacts to change, then a simple hash
 chain was built to show how tampering in a log can be detected.
  ```
-sha256sum record.txt\
-\
-cp record.txt tampered.txt; echo \'x\' \>\> tampered.txt\
+sha256sum record.txt
+
+cp record.txt tampered.txt; echo \'x' >> tampered.txt\
 sha256sum record.txt tampered.txt
  ```
 <img width="875" height="91" alt="Image" src="https://github.com/user-attachments/assets/f80fc351-f67e-41c5-83e6-76508bbcefb8" />
@@ -284,10 +284,10 @@ sha256sum record.txt tampered.txt
  
 <img width="875" height="210" alt="Image" src="https://github.com/user-attachments/assets/4bc4dfec-9435-41aa-83df-8ce98d062607" />
  ```
-PREV=0\
-for line in \'login ok\' \'file read\' \'export data\'; do\
-PREV=\$(echo -n \"\$PREV\$line\" \| sha256sum \| cut -d\' \' -f1)\
-echo \"\$line \| \$PREV\"\
+PREV=0
+for line in 'login ok' 'file read' 'export data'; do
+PREV=$(echo -n "$PREV$line" | sha256sum | cut -d' ' -f1)
+echo "$line | $PREV"
 done
  
  ```
