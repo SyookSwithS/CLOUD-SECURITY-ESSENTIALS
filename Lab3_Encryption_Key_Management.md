@@ -14,7 +14,7 @@ Cloud Computing Security Essentials
  
   **Operating System**  :  Ubuntu (VMware Workstation)
  
-  **Date Completed**    :  20 August 2026 
+ 
   -----------------------------------------------------------------------
  
 *Note on redaction: All KMS Key IDs, ARNs, and generated data-key
