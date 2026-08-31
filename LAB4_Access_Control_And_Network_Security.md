@@ -102,11 +102,13 @@ Unauthenticated requests are correctly rejected with `401 Unauthorized`, and req
 
 Evidence:
 
-![Auth 401](Evidence/1.1-Auth-401.png)
+<img width="821" height="558" alt="Image" src="https://github.com/user-attachments/assets/622dd9af-7fcc-47cd-b49b-7f95250cd94f" />
 
-![Auth 200](Evidence/1.2-Auth-200.png)
+<img width="594" height="150" alt="Image" src="https://github.com/user-attachments/assets/bd7a141a-6c17-4006-b146-d79a5ca2d2f7" />
 
-![Auth bug fix](Evidence/1.3-Auth-Bug-Fix.png)
+<img width="800" height="100" alt="Image" src="https://github.com/user-attachments/assets/f6aaf8fd-f06d-4e11-8cfe-d0699c5e6aa9" />
+
+<img width="814" height="146" alt="Image" src="https://github.com/user-attachments/assets/bfa91357-ce1c-475b-b147-4fc0de929454" />
 
 ---
 
@@ -127,9 +129,9 @@ A base32 shared secret was generated and used to produce a time-based 6-digit co
 
 Evidence:
 
-![TOTP secret and code](Evidence/2.1-TOTP-Secret.png)
+<img width="788" height="125" alt="Image" src="https://github.com/user-attachments/assets/514bd236-61b7-42e2-9aa8-e0f59ac6aa53" />
 
-![MFA OK](Evidence/2.2-MFA-OK.png)
+<img width="810" height="128" alt="Image" src="https://github.com/user-attachments/assets/c570f4bd-3362-46d6-9ccc-433c6218ecc0" />
 
 ---
 
@@ -163,11 +165,11 @@ The `dev` ServiceAccount was bound to a Role that only permits `get` and `list` 
 
 Evidence:
 
-![kind cluster created](Evidence/3.1-Kind-Cluster.png)
+<img width="809" height="346" alt="Image" src="https://github.com/user-attachments/assets/95d6d8bb-72a1-44c7-995f-6426cc3412cb" />
 
-![RBAC role and rolebinding](Evidence/3.2-RBAC-Role.png)
+<img width="809" height="244" alt="Image" src="https://github.com/user-attachments/assets/cead60ae-4f90-40aa-849e-58949824ad85" />
 
-![can-i results](Evidence/3.3-CanI-Results.png)
+<img width="760" height="165" alt="Image" src="https://github.com/user-attachments/assets/b9a33f80-8a89-403c-91a9-3b9993b88667" />
 
 **End of Session A.** Auth service stopped:
 
@@ -219,8 +221,13 @@ Result:
 
 Evidence:
 
-![Segmentation test result](Evidence/4.1-Segmentation-Fix.png)
+<img width="746" height="96" alt="Image" src="https://github.com/user-attachments/assets/71e22808-7998-410a-8d2d-55529388f8b8" />
 
+<img width="815" height="365" alt="Image" src="https://github.com/user-attachments/assets/e0caaf5d-8658-422f-88d2-4ea2104e469e" />
+
+<img width="800" height="123" alt="Image" src="https://github.com/user-attachments/assets/f7366234-c995-43e2-bc23-9c5a1974a175" />
+
+<img width="800" height="123" alt="Image" src="https://github.com/user-attachments/assets/f7366234-c995-43e2-bc23-9c5a1974a175" />
 ---
 
 ### Task 5: Firewall Rules (Default-Deny)
@@ -249,7 +256,7 @@ The default INPUT policy was set to `DROP`, with explicit `ACCEPT` rules only fo
 
 Evidence:
 
-![iptables default-deny ruleset](Evidence/5.1-Iptables-DefaultDeny.png)
+<img width="800" height="240" alt="Image" src="https://github.com/user-attachments/assets/f644ca8b-71c6-4578-a309-e266820ac9c3" />
 
 ---
 
@@ -286,9 +293,11 @@ The `hardened` container runs as non-root UID 1000 with a read-only root filesys
 
 Evidence:
 
-![Hardened container inspect](Evidence/6.1-Hardened-Inspect.png)
+<img width="940" height="494" alt="Image" src="https://github.com/user-attachments/assets/0333f517-6c70-4ea6-b9b6-8ea422d4cd1d" />
 
-![Trivy scan summary](Evidence/6.2-Trivy-Scan.png)
+<img width="940" height="812" alt="image" src="https://github.com/user-attachments/assets/39dcb6d5-20cd-4359-aea6-ed88562a192c" />
+
+
 
 ---
 
@@ -320,9 +329,7 @@ and:
 
 Evidence:
 
-![Verify rolebinding](Evidence/7.1-Verify-RoleBinding.png)
-
-![Verify CapDrop](Evidence/7.2-Verify-CapDrop.png)
+<img width="704" height="444" alt="Image" src="https://github.com/user-attachments/assets/f3a28876-7276-4856-9340-4d99345bbf91" />
 
 ---
 
@@ -330,43 +337,43 @@ Evidence:
 
 ### Q1. Explain the difference between authentication and authorization using Tasks 1 and 3.
 
-Authentication (Task 1) verifies **who** the entity making the request is. The `authsvc` service uses HTTP Basic Auth to check whether the user can prove their identity with valid credentials (`student:P@ssw0rd!`). A request without credentials is rejected with `401 Unauthorized`, while valid credentials return `200 OK`.
+Authentication (Task 1) verifies who the entity making the request is. The authsvc service uses HTTP Basic Auth to check whether the user can prove their identity with valid credentials student:P@ssw0rd!. A request without credentials is rejected with 401 Unauthorized, while valid credentials return 200 OK.
 
-Authorization (Task 3) verifies **what** that entity is allowed to do, after identity has already been confirmed. In Kubernetes RBAC, the ServiceAccount `dev` is given a Role that only permits `get` and `list` on `pods`. The `kubectl auth can-i` tests confirmed `dev` can `list pods` (yes) but cannot `create deploy` or `delete pods` (no) — even though its identity (`dev`) had already been authenticated successfully.
+Authorization (Task 3) verifies what that entity is allowed to do, after identity has already been confirmed. In Kubernetes RBAC, the ServiceAccount dev is given a Role that only permits get and list on pods. The kubectl auth can-i tests confirmed dev can list pods (yes) but cannot create deploy or delete pods (no) — even though its identity (dev) had already been authenticated successfully.
 
-In short: authentication = "Are you who you claim to be?", authorization = "What are you allowed to do now that we know who you are?"
+In short, authentication is "Are you who you claim to be?", authorization is "What are you allowed to do now ?"
 
 ### Q2. Why is MFA so effective, and which attacks does it defeat?
 
-MFA is effective because it combines two different factor classes — *something you know* (password) and *something you have* (the TOTP secret/device). In Task 2, the 6-digit code is generated from the shared secret and the current time (time-based), changing every 30 seconds. This means that even if an attacker steals the password, they still need access to the secret/device to actually log in.
+MFA is effective because it combines two different factor classes,something you know (password) and something you have (the TOTP secret/device). In Task 2, the 6-digit code is generated from the shared secret and the current time (time-based), changing every 30 seconds. This means that even if an attacker steals the password, they still need access to the secret/device to actually log in.
 
 Attacks MFA defeats:
-- **Credential stuffing / password reuse** — a leaked password from one service isn't enough to log in elsewhere.
-- **Phishing of passwords alone** — the attacker gets the password but has no valid current TOTP code.
-- **Password brute-forcing** — even a correctly guessed password still needs a TOTP code that changes every 30 seconds.
+- Credential stuffing / password reuse,a leaked password from one service isn't enough to log in elsewhere.
+- Phishing of passwords alone — the attacker gets the password but has no valid current TOTP code.
+- Password brute-forcing — even a correctly guessed password still needs a TOTP code that changes every 30 seconds.
 
 ### Q3. How does network segmentation limit the damage of a compromised web server?
 
-In Task 4, `web` (the front-facing tier) is only connected to `frontend-net`, while `db` is only on `backend-net`. Testing confirmed `web` **could not** reach `db` (`BLOCKED`), while `app` (connected to both networks) **could** reach `db` (`REACHABLE`).
+In Task 4, web (the front-facing tier) is only connected to frontend-net, while db is only on backend-net. Testing confirmed web could not reach db (BLOCKED), while app (connected to both networks) could reach db (REACHABLE).
 
-This means that if an attacker compromises `web` (e.g. via a web app exploit), they cannot move laterally to reach `db` directly — they would have to go through `app` first, which adds an extra layer of defence (defence in depth). Segmentation limits the *blast radius* of a breach to a single tier rather than the entire system.
+This means that if an attacker compromises web (via a web app exploit), they cannot move laterally to reach db directly, they would have to go through app first, which adds an extra layer of defence (defence in depth). Segmentation limits the blast radius of a breach to a single tier rather than the entire system.
 
 ### Q4. What does a default-deny firewall policy achieve, and how does it relate to cloud security groups?
 
-In Task 5, `iptables -P INPUT DROP` sets the default policy to reject **all** inbound traffic, with only port 443 (HTTPS) and loopback (`lo`) explicitly allowed. This is the principle of least privilege applied to networking — nothing is permitted unless explicitly stated.
+In Task 5, iptables -P INPUT DROP sets the default policy to reject all inbound traffic, with only port 443 (HTTPS) and loopback (lo) explicitly allowed. This is the principle of least privilege applied to networking,nothing is permitted unless explicitly stated.
 
-This directly mirrors the **cloud security group** model (e.g. AWS Security Groups, Azure NSGs), which also operates on a default-deny basis: administrators must explicitly allow specific ports/protocols, and any other traffic is automatically blocked. This reduces the attack surface by ensuring only genuinely necessary services are exposed to the network.
+This directly mirrors the cloud security group model (AWS Security Groups, Azure NSGs), which also operates on a default-deny basis: administrators must explicitly allow specific ports/protocols, and any other traffic is automatically blocked. This reduces the attack surface by ensuring only genuinely necessary services are exposed to the network.
 
 ### Q5. List the hardening measures you applied and the attack surface each one removes.
 
 | Hardening Measure | Attack Surface Removed |
 |---|---|
-| `--user 1000:1000` (non-root) | Prevents the process inside the container from having root privileges on the host if the container is compromised (limits container escape impact) |
-| `--read-only` (read-only root filesystem) | Prevents an attacker from writing/planting malware, webshells, or modifying system files inside the container |
-| `--cap-drop=ALL` | Removes all special Linux capabilities (e.g. `CAP_NET_RAW`, `CAP_SYS_ADMIN`) that could otherwise be exploited for privilege escalation or network attacks |
-| `--security-opt no-new-privileges` | Prevents the process from gaining additional privileges via setuid/setgid binaries |
-| `--tmpfs /tmp` | Provides limited, ephemeral write space without breaking the read-only root filesystem |
-| Trivy vulnerability scan | Identifies existing CVEs in the image (2 HIGH found in `nginx:alpine`) so they can be patched before deployment |
+| --user 1000:1000 (non-root) | Prevents the process inside the container from having root privileges on the host if the container is compromised (limits container escape impact) |
+| --read-only (read-only root filesystem) | Prevents an attacker from writing/planting malware, webshells, or modifying system files inside the container |
+| --cap-drop=ALL | Removes all special Linux capabilities (e.g. CAP_NET_RAW, CAP_SYS_ADMIN) that could otherwise be exploited for privilege escalation or network attacks |
+| --security-opt no-new-privileges | Prevents the process from gaining additional privileges via setuid/setgid binaries |
+| --tmpfs /tmp | Provides limited, ephemeral write space without breaking the read-only root filesystem |
+| Trivy vulnerability scan | Identifies existing CVEs in the image (2 HIGH found in nginx:alpine) so they can be patched before deployment |
 
 ---
 
