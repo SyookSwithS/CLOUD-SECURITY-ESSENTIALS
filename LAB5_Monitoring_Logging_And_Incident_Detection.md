@@ -65,9 +65,8 @@ LocalStack (pinned to `4.4.0`) started successfully, and the `/ccse/app` log gro
 
 Evidence:
 
-![LocalStack auth token error](Evidence/0.1-LocalStack-AuthToken-Error.png)
+<img width="809" height="100" alt="Image" src="https://github.com/user-attachments/assets/29f8ec23-f4fa-45b7-a95b-23c2bf02dd14" />
 
-![LocalStack started successfully](Evidence/0.2-LocalStack-Started.png)
 
 ---
 
@@ -94,7 +93,7 @@ A simulated authentication log was created containing one legitimate login (`ahm
 
 Evidence:
 
-![auth.log created](Evidence/1.1-Auth-Log-Created.png)
+<img width="801" height="398" alt="Image" src="https://github.com/user-attachments/assets/10de4001-46eb-4fc4-a5a7-c453633dfa0c" />
 
 ---
 
@@ -117,7 +116,9 @@ All 7 lines of `auth.log` were shipped to the centralised CloudWatch Logs store 
 
 Evidence:
 
-![CloudWatch read-back](Evidence/2.1-CloudWatch-Readback.png)
+<img width="798" height="145" alt="Image" src="https://github.com/user-attachments/assets/6059b307-3e5e-4d97-9bc1-8493beb90199" />
+
+<img width="809" height="210" alt="Image" src="https://github.com/user-attachments/assets/f46ce11b-fb09-4296-8619-73a7331eb4d6" />
 
 ---
 
@@ -149,7 +150,9 @@ Four failed logins were identified, all for user `admin` from the same IP addres
 
 Evidence:
 
-![Query bug fix and result](Evidence/3.1-Query-Bug-Fix.png)
+<img width="803" height="66" alt="Image" src="https://github.com/user-attachments/assets/648233ec-4b5f-4da7-b613-d2263db1ece8" />
+
+<img width="803" height="79" alt="Image" src="https://github.com/user-attachments/assets/f3b220a7-4c24-4434-b7a5-0ab8bb0e3f7d" />
 
 **End of Session A.** `auth.log` and the centralised read-back were retained for Session B.
 
@@ -208,11 +211,11 @@ Changing a single value in the last log line produced a completely different fin
 
 Evidence:
 
-![Hash chain generated](Evidence/4.1-Hash-Chain.png)
+<img width="813" height="465" alt="Image" src="https://github.com/user-attachments/assets/ce1d0c80-ccdf-471f-ad9c-bee5bc73f4d3" />
 
-![Tampered log](Evidence/4.2-Tampered-Log.png)
+<img width="808" height="121" alt="Image" src="https://github.com/user-attachments/assets/e4e2cd88-5a9d-44f7-b7d2-d307d20cbe1e" />
 
-![Tamper detected via hash mismatch](Evidence/4.3-Tamper-Detected.png)
+<img width="815" height="114" alt="Image" src="https://github.com/user-attachments/assets/9393e1d9-0372-4b57-8307-9db78f84e4ca" />
 
 ---
 
@@ -243,7 +246,7 @@ No single log line in `auth.log` is inherently malicious — failed logins, a su
 
 Evidence:
 
-![Correlation alert](Evidence/5.1-Correlation-Alert.png)
+<img width="784" height="253" alt="Image" src="https://github.com/user-attachments/assets/9a91ee8c-6c08-4951-9f2d-18be6eb18e56" />
 
 ---
 
@@ -283,9 +286,9 @@ Traffic from the attacker IP (`203.0.113.9`) was blocked at the firewall, contai
 
 Evidence:
 
-![Containment rule applied](Evidence/6.1-Containment.png)
+<img width="815" height="121" alt="Image" src="https://github.com/user-attachments/assets/f52407b6-c08c-4720-9fa2-99a7c717079a" />
 
-![Evidence collected and hashed](Evidence/6.2-Evidence-Collected.png)
+<img width="808" height="115" alt="Image" src="https://github.com/user-attachments/assets/48a55540-2c9b-4063-80f3-9eaace20a625" />
 
 ---
 
@@ -332,9 +335,7 @@ evidence_20260902.log: OK
 
 Evidence:
 
-![Verify log groups](Evidence/7.1-Verify-LogGroups.png)
-
-![Verify evidence hash](Evidence/7.2-Verify-Evidence-Hash.png)
+<img width="809" height="323" alt="Image" src="https://github.com/user-attachments/assets/3b76a1b2-1a20-48ae-bd61-87eacb05116f" />
 
 ---
 
